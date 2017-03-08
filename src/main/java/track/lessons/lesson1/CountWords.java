@@ -1,6 +1,8 @@
 package track.lessons.lesson1;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.BufferedReader;
 
 /**
  * Задание 1: Реализовать два метода
@@ -22,6 +24,27 @@ import java.io.File;
  *
  */
 public class CountWords {
+    private boolean isNumber(String line){
+        boolean isnumber;
+        try{
+            Integer.parseInt(line);
+            isnumber = true;
+        } catch (NumberFormatException n){
+            isnumber = false;
+        }
+        return isnumber;
+    }
+
+    private boolean isSpaces(String line){
+        boolean isspaces = true;
+        int i;
+        for (i=0; i<line.length(); i++){
+            if (line.charAt(i) != ' '){
+                isspaces = false;
+            }
+        }
+        return isspaces;
+    }
 
     /**
      * Метод на вход принимает объект File, изначально сумма = 0
@@ -31,7 +54,17 @@ public class CountWords {
      * @return - целое число - сумма всех чисел из файла
      */
     public long countNumbers(File file) throws Exception {
-        return 0;
+        String line;
+        long count_res = 0;
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        while((line = bufferedReader.readLine()) != null){
+            if (isNumber(line)){
+                Integer line_to_int = Integer.parseInt(line);
+                count_res += line_to_int;
+            }
+        }
+        return count_res;
     }
 
 
@@ -43,7 +76,13 @@ public class CountWords {
      * @return - результирующая строка
      */
     public String concatWords(File file) throws Exception {
-        return null;
+        String line;
+        String res_line = "";
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        while ((line = bufferedReader.readLine()) != null){
+            if ((! isNumber(line)) && (! line.equals("")) && (! isSpaces(line))) res_line += line + " ";
+        }
+        return res_line.substring(0, res_line.length() - 1);
     }
-
 }
