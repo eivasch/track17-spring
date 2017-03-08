@@ -24,22 +24,22 @@ import java.io.BufferedReader;
  *
  */
 public class CountWords {
-    private boolean isNumber(String line){
+    private boolean isNumber(String line) {
         boolean isnumber;
-        try{
+        try {
             Integer.parseInt(line);
             isnumber = true;
-        } catch (NumberFormatException n){
+        } catch (NumberFormatException n) {
             isnumber = false;
         }
         return isnumber;
     }
 
-    private boolean isSpaces(String line){
+    private boolean isSpaces(String line) {
         boolean isspaces = true;
-        int i;
-        for (i=0; i<line.length(); i++){
-            if (line.charAt(i) != ' '){
+        int index;
+        for (index = 0; index < line.length(); index++) {
+            if (line.charAt(index) != ' ') {
                 isspaces = false;
             }
         }
@@ -55,16 +55,16 @@ public class CountWords {
      */
     public long countNumbers(File file) throws Exception {
         String line;
-        long count_res = 0;
+        long countRes = 0;
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
-        while((line = bufferedReader.readLine()) != null){
-            if (isNumber(line)){
-                Integer line_to_int = Integer.parseInt(line);
-                count_res += line_to_int;
+        while ((line = bufferedReader.readLine()) != null) {
+            if (isNumber(line)) {
+                Integer lineToInt = Integer.parseInt(line);
+                countRes += lineToInt;
             }
         }
-        return count_res;
+        return countRes;
     }
 
 
@@ -77,12 +77,14 @@ public class CountWords {
      */
     public String concatWords(File file) throws Exception {
         String line;
-        String res_line = "";
+        String resLine = "";
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
-        while ((line = bufferedReader.readLine()) != null){
-            if ((! isNumber(line)) && (! line.equals("")) && (! isSpaces(line))) res_line += line + " ";
+        while ((line = bufferedReader.readLine()) != null) {
+            if ((! isNumber(line)) && (! line.equals("")) && (! isSpaces(line))) {
+                resLine += line + " ";
+            }
         }
-        return res_line.substring(0, res_line.length() - 1);
+        return resLine.substring(0, resLine.length() - 1);
     }
 }
