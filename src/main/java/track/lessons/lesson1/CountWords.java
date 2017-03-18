@@ -24,15 +24,14 @@ import java.io.BufferedReader;
  *
  */
 public class CountWords {
-    private boolean isNumber(String line) {
-        boolean isnumber;
+    private Integer stringToNumber(String line) {
+        Integer result;
         try {
-            Integer.parseInt(line);
-            isnumber = true;
+            result = Integer.parseInt(line);
         } catch (NumberFormatException n) {
-            isnumber = false;
+            result = null;
         }
-        return isnumber;
+        return result;
     }
 
     private boolean isSpaces(String line) {
@@ -59,8 +58,8 @@ public class CountWords {
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         while ((line = bufferedReader.readLine()) != null) {
-            if (isNumber(line)) {
-                Integer lineToInt = Integer.parseInt(line);
+            Integer lineToInt = stringToNumber(line);
+            if (lineToInt != null) {
                 countRes += lineToInt;
             }
         }
@@ -81,7 +80,8 @@ public class CountWords {
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         while ((line = bufferedReader.readLine()) != null) {
-            if ((! isNumber(line)) && (! line.equals("")) && (! isSpaces(line))) {
+            Integer lineToInt = stringToNumber(line);
+            if ((lineToInt == null) && (! line.equals("")) && (! isSpaces(line))) {
                 resLine += line + " ";
             }
         }
