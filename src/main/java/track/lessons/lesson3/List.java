@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
  * Сейчас все методы помечены как abstract - эту метку можно убирать, если вы реализовываете его в этом классе
  */
 public abstract class List {
+    protected int listSize;
 
     /**
      * Добавить элемент в конец списка
@@ -24,13 +25,25 @@ public abstract class List {
      * Метод, который может бросить ошибку должен быть отмечен как throws НазваниеИсключения
      * как сделано для этого метода
      */
-    abstract int remove(int idx) throws NoSuchElementException;
+    int remove(int idx) throws NoSuchElementException {
+        if (idx < 0 || idx >= size()) {
+            throw new NoSuchElementException();
+        }
+        int newSize = size() - 1;
+        listSize = newSize;
+        return newSize;
+    }
 
 
     /**
      * Получить элемент с позиции idx, бросить исключение, если позиция невалидная
      */
-    abstract int get(int idx) throws NoSuchElementException;
+    int get(int idx) throws NoSuchElementException {
+        if (idx < 0 || idx >= size()) {
+            throw new NoSuchElementException();
+        }
+        return 0;
+    }
 
     /**
      * Кол-во элементов списка

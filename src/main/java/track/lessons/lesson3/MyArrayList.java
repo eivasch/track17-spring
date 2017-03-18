@@ -11,7 +11,6 @@ import java.util.NoSuchElementException;
  */
 public class MyArrayList extends List {
     private int[] list;
-    private int listSize;
 
     public MyArrayList() {
         list = new int[0];
@@ -35,24 +34,18 @@ public class MyArrayList extends List {
 
     @Override
     int remove(int idx) throws NoSuchElementException {
-        if (idx < 0 || idx >= size()) {
-            throw new NoSuchElementException();
-        }
-        int newSize = size() - 1;
+        int newSize = super.remove(idx);
         int[] newList = new int[newSize];
         System.arraycopy(list, 0, newList, 0, idx);
         System.arraycopy(list, idx + 1, newList, idx, newSize - idx);
         int removedItem = list[idx];
         list = newList;
-        listSize = newSize;
         return removedItem;
     }
 
     @Override
     int get(int idx) throws NoSuchElementException {
-        if (idx < 0 || idx >= size()) {
-            throw new NoSuchElementException();
-        }
+        super.get(idx);
         return list[idx];
     }
 
