@@ -76,13 +76,13 @@ public class CountWords {
      */
     public String concatWords(File file) throws Exception {
         String line;
-        String resLine = "";
+        StringBuilder resLine = new StringBuilder(0);
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         while ((line = bufferedReader.readLine()) != null) {
             Integer lineToInt = stringToNumber(line);
             if ((lineToInt == null) && (! line.equals("")) && (! isSpaces(line))) {
-                resLine += line + " ";
+                resLine.append(line + " ");
             }
         }
         return resLine.substring(0, resLine.length() - 1);
