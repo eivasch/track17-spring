@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
  * Должен наследовать List
  * Односвязный список
  */
-public class MyLinkedList extends List {
+public class MyLinkedList extends List implements Stack, Queue {
     private Node start;
     private Node end;
 
@@ -80,5 +80,25 @@ public class MyLinkedList extends List {
     @Override
     int size() {
         return listSize;
+    }
+
+    @Override
+    public void push(int value) {
+        this.add(value);
+    }
+
+    @Override
+    public int pop() {
+        return this.remove(size() - 1);
+    }
+
+    @Override
+    public void enqueue(int value) {
+        this.add(value);
+    }
+
+    @Override
+    public int dequeu() {
+        return this.remove(0);
     }
 }
