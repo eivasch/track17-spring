@@ -56,4 +56,28 @@ public class MyLinkedListTest {
 
         Assert.assertTrue(list.size() == 0);
     }
+
+    @Test(expected = NoSuchElementException.class)
+    public void stackTest() throws Exception {
+       Stack stack = new MyLinkedList();
+       stack.push(10);
+       stack.push(15);
+
+       Assert.assertEquals(15, stack.pop());
+       Assert.assertEquals(10, stack.pop());
+
+       stack.pop();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void queueTest() throws Exception {
+        Queue queue = new MyLinkedList();
+        queue.enqueue(10);
+        queue.enqueue(15);
+
+        Assert.assertEquals(10, queue.dequeu());
+        Assert.assertEquals(15, queue.dequeu());
+
+        queue.dequeu();
+    }
 }
