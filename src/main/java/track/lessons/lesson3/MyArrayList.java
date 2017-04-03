@@ -34,23 +34,21 @@ public class MyArrayList extends List {
 
     @Override
     int remove(int idx) throws NoSuchElementException {
-        int newSize = super.remove(idx);
+        check_idx(idx);
+        int newSize = listSize - 1;
         int[] newList = new int[newSize];
         System.arraycopy(list, 0, newList, 0, idx);
         System.arraycopy(list, idx + 1, newList, idx, newSize - idx);
         int removedItem = list[idx];
         list = newList;
+        listSize--;
         return removedItem;
     }
 
     @Override
     int get(int idx) throws NoSuchElementException {
-        super.get(idx);
+        check_idx(idx);
         return list[idx];
     }
 
-    @Override
-    int size() {
-        return listSize;
-    }
 }

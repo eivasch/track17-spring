@@ -12,6 +12,12 @@ import java.util.NoSuchElementException;
 public abstract class List {
     protected int listSize;
 
+    void check_idx(int idx) throws NoSuchElementException {
+        if (idx < 0 || idx >= size()) {
+            throw new NoSuchElementException();
+        }
+    }
+
     /**
      * Добавить элемент в конец списка
      */
@@ -25,30 +31,18 @@ public abstract class List {
      * Метод, который может бросить ошибку должен быть отмечен как throws НазваниеИсключения
      * как сделано для этого метода
      */
-    int remove(int idx) throws NoSuchElementException {
-        if (idx < 0 || idx >= size()) {
-            throw new NoSuchElementException();
-        }
-        int newSize = size() - 1;
-        listSize = newSize;
-        return newSize;
-    }
-
+    abstract int remove(int idx) throws NoSuchElementException;
 
     /**
      * Получить элемент с позиции idx, бросить исключение, если позиция невалидная
      */
-    int get(int idx) throws NoSuchElementException {
-        if (idx < 0 || idx >= size()) {
-            throw new NoSuchElementException();
-        }
-        return 0;
-    }
+    abstract int get(int idx) throws NoSuchElementException;
 
     /**
      * Кол-во элементов списка
      */
-    abstract int size();
-
+    int size() {
+        return listSize;
+    }
 
 }

@@ -28,7 +28,10 @@ public class MyLinkedList extends List implements Stack, Queue {
         }
     }
 
-    private Node getNode(int idx) {
+    private Node getNode(int idx) throws NoSuchElementException {
+        if (idx < 0) {
+            throw new NoSuchElementException();
+        }
         Node current = start;
         for (int i = 0; i < idx; i++) {
             current = current.next;
@@ -58,7 +61,8 @@ public class MyLinkedList extends List implements Stack, Queue {
 
     @Override
     int remove(int idx) throws NoSuchElementException {
-        super.remove(idx);
+        super.check_idx(idx);
+        listSize--;
         Node removed = getNode(idx);
         if (idx == 0) {
             start = removed.next;
@@ -72,14 +76,9 @@ public class MyLinkedList extends List implements Stack, Queue {
 
     @Override
     int get(int idx) throws NoSuchElementException {
-        super.get(idx);
+        super.check_idx(idx);
         Node needed = getNode(idx);
         return needed.val;
-    }
-
-    @Override
-    int size() {
-        return listSize;
     }
 
     @Override
