@@ -1,10 +1,6 @@
 package track.lessons.lesson5generics;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import track.util.Util;
 
@@ -24,9 +20,11 @@ public class Cypher {
                     ch += SYMBOL_DIST;
                 }
                 // Если это буква, то собираем частотную информацию
-
-
-
+                if (map.containsKey(ch)) {
+                    map.put(ch, map.get(ch) + 1);
+                } else {
+                    map.put(ch, 1);
+                }
             }
         }
         return map;
@@ -45,10 +43,21 @@ public class Cypher {
         обратно в Map для того, чтобы иметь быстрый доступ get().
 
      */
+    private class MyComparator implements Comparator<Map.Entry<Character, Integer>> {
+        public int compare(Map.Entry<Character, Integer> entry1,Map.Entry<Character, Integer> entry2) {
+            return (-1) * entry1.getValue().compareTo(entry2.getValue());
+        }
+    }
+
     public Map<Character, Integer> buildHist(String data) {
         Map<Character, Integer> map = readData(data);
-
-        return null;
+        List<Map.Entry<Character, Integer>> list = new ArrayList<>(map.entrySet());
+        list.sort(new MyComparator());
+        Map<Character, Integer> newMap = new LinkedHashMap<>();
+        for (Map.Entry<Character, Integer> entry : list) {
+            newMap.put(entry.getKey(), entry.getValue());
+        }
+        return newMap;
     }
 
     /**
@@ -60,7 +69,21 @@ public class Cypher {
      * @return расшифрованный текст
      */
     public String merge(List<Character> in, List<Character> out, String encrypted) {
-        return null;
+        StringBuilder newLine = new StringBuilder();
+        for (int i = 0; i < encrypted.length(); i++) {
+            char ch = encrypted.charAt(i);
+            if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')) {
+                if (ch < 'Z') {
+                    ch += SYMBOL_DIST;
+                }
+                Integer pos = out.indexOf(ch);
+                Character trueChar = in.get(pos);
+                newLine.append(trueChar);
+            } else {
+                newLine.append(' ');
+            }
+        }
+        return newLine.toString();
     }
 
     public static void main(String[] args) {
