@@ -1,5 +1,6 @@
 package track.container;
 
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ public class Container {
     private Map<String, Object> objByName;
     private Map<String, Object> objByClassName;
 
+
     public Container(List<Bean> beans) {
         objByName = new HashMap<>();
         objByClassName = new HashMap<>();
@@ -35,7 +37,8 @@ public class Container {
         String methodName = getSetMethodName(name);
         Method method = clazz.getDeclaredMethod(methodName, field.getType());
         method.invoke(newObject, value);
-    }
+    }d main(String[] args) throws Exception {
+
 
     private Object createObject(Bean bean) throws Exception {
         Class clazz = Class.forName(bean.getClassName());
