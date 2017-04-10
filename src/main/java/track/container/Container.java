@@ -2,7 +2,6 @@ package track.container;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,6 @@ public class Container {
     private Map<String, Object> objByName;
     private Map<String, Object> objByClassName;
 
-    // Реализуйте этот конструктор, используется в тестах!
     public Container(List<Bean> beans) {
         objByName = new HashMap<>();
         objByClassName = new HashMap<>();
@@ -31,21 +29,24 @@ public class Container {
         return "set" + name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
+    private void setUsingMethod(String name, Class clazz, Object value, Object newObject) throws Exception {
+        Field field = clazz.getDeclaredField(name);
+        field.setAccessible(true);
+        String methodName = getSetMethodName(name);
+        Method method = clazz.getDeclaredMethod(methodName, field.getType());
+        method.invoke(newObject, value);
+    }
+
     private Object createObject(Bean bean) throws Exception {
         Class clazz = Class.forName(bean.getClassName());
         Object newObject = clazz.newInstance();
         Map<String, Property> properties = bean.getProperties();
         for (Property property: properties.values()) {
-            Field field = clazz.getDeclaredField(property.getName());
-            field.setAccessible(true);
             if (property.getType().equals(ValueType.VAL)) {
-                field.set(newObject, Integer.parseInt(property.getValue()));
+                setUsingMethod(property.getName(), clazz, Integer.parseInt(property.getValue()), newObject);
             } else {
                 Object refObject = getById(property.getValue());
-                String methodName = getSetMethodName(property.getName());
-                Method method = clazz.getDeclaredMethod(methodName, field.getType());
-                method.invoke(newObject, refObject);
-                field.set(newObject, refObject);
+                setUsingMethod(property.getName(), clazz, refObject, newObject);
             }
         }
         objByClassName.put(bean.getClassName(), newObject);
