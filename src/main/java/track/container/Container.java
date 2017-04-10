@@ -37,7 +37,7 @@ public class Container {
         String methodName = getSetMethodName(name);
         Method method = clazz.getDeclaredMethod(methodName, field.getType());
         method.invoke(newObject, value);
-    }d main(String[] args) throws Exception {
+    }
 
 
     private Object createObject(Bean bean) throws Exception {
