@@ -23,7 +23,7 @@ public class Main {
 
 //        // При чтении нужно обработать исключение
         JsonConfigReader reader = new JsonConfigReader();
-        File file = new File("/home/pufelka/Tehnotrack/java/src/main/resources/config.json");
+        File file = new File("src/main/resources/config.json");
         List<Bean> beans;
         beans = reader.parseBeans(file);
         Container container = new Container(beans);

@@ -22,7 +22,7 @@ public class ContainerTest {
     @BeforeClass
     public static void init() {
         reader = new JsonConfigReader();
-        file = new File("/home/pufelka/Tehnotrack/java/src/main/resources/config.json");
+        file = new File("src/main/resources/config.json");
     }
 
     @Test
@@ -37,8 +37,6 @@ public class ContainerTest {
 
     @Test
     public void setGear() throws Exception {
-        JsonConfigReader reader = new JsonConfigReader();
-        File file = new File("/home/pufelka/Tehnotrack/java/src/main/resources/config.json");
         List<Bean> beans = reader.parseBeans(file);
         Container container = new Container(beans);
         Gear gear = (Gear) container.getByClass("track.container.beans.Gear");
